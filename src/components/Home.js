@@ -5,13 +5,19 @@ import Demo from './Demo';
 import Button from './Button';
 function Home() {
   const [res, setRest] = useState('');
-  const buttons = ['C', '9','/','8','7','6','*','5','4','3','+','2','1','0','-','.','Del','='];
+  const buttons = ['C', '9','/','8','7','6','*','5','4','3','+','2','1','0','-','.','(',')','Del','='];
   const findVal = () => {
+    let openParenthesis = (res.match(/\(/g) || []).length;
+    let closeParenthesis = (res.match(/\)/g) || []).length;
+    if (openParenthesis !== closeParenthesis) {
+      setRest('Error: Parenthesis mismatch');
+      return;
+    }
     let result = Function('return ' + res)();
     setRest(result.toString());
   }
   const handler = (arg) => {
-    //console.log(arg);
+    console.log(arg);
     if(arg === 'infinity') {
       return;
     }
